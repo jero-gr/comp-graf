@@ -93,6 +93,12 @@ int main() {
 		glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
 		drawFloor(true);				// Dibujar el piso con valor de stencil 1
 		
+		/*
+		glStencilFunc(GL_NEVER,0,~0);	// Que pase siempre con valor 1
+		glStencilOp(GL_INCR, GL_KEEP, GL_KEEP);
+		drawFloor(true);				// Dibujar el piso con valor de stencil 1
+		*/
+		
 		glStencilFunc(GL_NOTEQUAL,1,~0);		// Que FALLE cuando el valor sea igual a 1
 		glStencilOp(GL_INCR, GL_KEEP, GL_KEEP); // Si FALLA, que guarde valor 2 (1+1)
 		drawObject(shadow);						// Dibujar la sombra con valor de stencil 2
@@ -118,7 +124,6 @@ int main() {
 		glDisable(GL_STENCIL_TEST); // La luz y el objeto no dependen del stencil
 		drawObject(identity);
 		drawLight();
-		
 		
 		draw_buffers.draw(win_width,win_height);
 		

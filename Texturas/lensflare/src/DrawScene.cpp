@@ -41,8 +41,20 @@ std::vector<glm::vec2> generateTextureCoordinatesForSkyDome(const std::vector<gl
 	
 	//centroide = centroide / float(positions.size());
 	
-	/// La coordenada s depende de las (x,z), la coordenada t depende de la y
+	for(int i=0;i<positions.size();i++) {
+		float radio = sqrt((positions[i].x * positions[i].x) + (positions[i].y * positions[i].y) + (positions[i].z * positions[i].z));
+		float t = 1/2 + (acos(positions[i].y / radio)) /3.14159;
+		
+		float theta = atan2(positions[i].z,positions[i].x);
+		float s = (3.14159+theta)/(2.f*3.14159);
+		
+		glm::vec2 tex_st = glm::vec2(s,t);
+		
+		tex_coords.push_back(tex_st);
+	}
 	
+	
+	/*
 	for(int i=0;i<positions.size();i++) {
 		
 		float t = 1-(positions[i][1]-pos_min[1])/(pos_max[1]-pos_min[1]);
@@ -56,7 +68,7 @@ std::vector<glm::vec2> generateTextureCoordinatesForSkyDome(const std::vector<gl
 		glm::vec2 tex_st = glm::vec2(s,t);
 		
 		tex_coords.push_back(tex_st);
-	}
+	}*/
 
 	return tex_coords;
 }

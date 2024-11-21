@@ -37,50 +37,26 @@ std::vector<glm::vec2> Flare::generateTextureCoordinatesForFlare(float size, con
 	
 	/// {-1.f, -1.f, 0.f}, { 1.f, -1.f, 0.f}, { 1.f, 1.f, 0.f} y {-1.f, 1.f, 0.f},
 	
-	float flare_scale = 0.001f;
-	/*
-	float flare_width = win_width*size*flare_scale;
-	float flare_height = win_height*size*flare_scale;
-	
-	float x_0 = center[0]-(flare_width/2);
-	float x_1 = center[0]+(flare_width/2);
-	
-	float y_0 = center[0]-(flare_height/2);
-	float y_1 = center[0]+(flare_height/2);
-	*/
-	
+	/// Definir la posición del la esquina superior izquierda del sticker
 	float x_0 = center[0]-(size/2);
-	float x_1 = center[0]+(size/2);
-	
 	float y_0 = center[1]-(size/2);
-	float y_1 = center[1]+(size/2);
 	
-	float m_x = 1.f/(x_1-x_0);
-	float b_x = - m_x*x_0;
-	
-	float s_0 = m_x*0+b_x;
-	float s_1 = m_x*win_width+b_x;
-	float s_2 = m_x*win_width+b_x;
-	float s_3 = m_x*0+b_x;
-	
-	float m_y = 1.f/(y_1-y_0);
-	float b_y = - m_y*y_0;
-	
-	float t_0 = m_y*0+b_y;
-	float t_1 = m_y*0+b_y;
-	float t_2 = m_y*win_height+b_y;
-	float t_3 = m_y*win_height+b_y;
-	
+	/// Usar regla de 3 para calcular las coordenadas de textura
+	float s_0 = -x_0/size;
+	float s_1 = (win_width-x_0)/size;
+	float t_0 = -y_0/size;
+	float t_1 = (win_height-y_0)/size;
+
 	glm::vec2 st_0 = {s_0,t_0};
 	texture_coords.push_back(st_0);
 	
-	glm::vec2 st_1 = {s_1,t_1};
+	glm::vec2 st_1 = {s_1,t_0};
 	texture_coords.push_back(st_1);
 	
-	glm::vec2 st_2 = {s_2,t_2};
+	glm::vec2 st_2 = {s_1,t_1};
 	texture_coords.push_back(st_2);
 	
-	glm::vec2 st_3 = {s_3,t_3};
+	glm::vec2 st_3 = {s_0,t_1};
 	texture_coords.push_back(st_3);
 	
 	return texture_coords;
